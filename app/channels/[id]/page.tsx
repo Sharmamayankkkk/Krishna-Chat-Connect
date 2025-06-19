@@ -231,14 +231,17 @@ export default function ChannelDetailPage() {
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back to Chat
             </Button>
-            <div className="flex items-center space-x-2">
-              <Hash className="h-5 w-5 text-gray-500" />
-              <h1 className="text-xl font-semibold text-gray-900">{channelInfo.name}</h1>
-              <Badge variant="secondary" className="ml-2">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-2 space-y-1 sm:space-y-0">
+              <div className="flex items-center space-x-2">
+                <Hash className="h-5 w-5 text-gray-500" />
+                <h1 className="text-xl font-semibold text-gray-900">{channelInfo.name}</h1>
+              </div>
+              <Badge variant="secondary" className="ml-0 sm:ml-2 mt-1 w-fit flex items-center space-x-1 bg-white text-gray-800 border border-gray-300">
                 <Users className="w-3 h-3 mr-1" />
                 {channelInfo.memberCount} members
               </Badge>
             </div>
+
           </div>
           <div className="flex items-center space-x-2">
             <Button
