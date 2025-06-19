@@ -195,11 +195,11 @@ export function Navigation({ currentUser, sidebarOpen, setSidebarOpen }: Navigat
 
   return (
     <div
-      className={`${sidebarOpen ? "translate-x-0" : "-translate-x-full"} fixed inset-y-0 left-0 z-50 w-72 bg-gradient-to-b from-indigo-900 via-blue-800 to-blue-700 text-white transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0 shadow-xl`}
+      className={`${sidebarOpen ? "translate-x-0" : "-translate-x-full"} fixed inset-y-0 left-0 z-50 w-72 discord-sidebar text-white transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0 shadow-xl`}
     >
       <div className="flex flex-col h-full">
         {/* Enhanced Header */}
-        <div className="p-4 border-b border-white/10 bg-gradient-to-r from-indigo-800 to-blue-800">
+        <div className="p-4 border-b border-white/10 bg-gradient-to-r from-orange-600 to-amber-600">
           <div className="flex items-center justify-between mb-3">
             <Logo size="md" showText={true} className="text-white" />
             <NotificationSystem currentUser={currentUser} />
@@ -207,7 +207,7 @@ export function Navigation({ currentUser, sidebarOpen, setSidebarOpen }: Navigat
           <div className="flex items-center space-x-3">
             <Avatar className="w-10 h-10 border-2 border-white/20">
               <AvatarImage src={currentUser?.avatar || "/placeholder.svg"} />
-              <AvatarFallback className="bg-gradient-to-br from-indigo-500 to-blue-600 text-white">
+              <AvatarFallback className="bg-gradient-to-br from-orange-500 to-amber-600 text-white">
                 {(currentUser?.spiritualName || currentUser?.name || "U")
                   .split(" ")
                   .map((n) => n[0])
@@ -222,10 +222,10 @@ export function Navigation({ currentUser, sidebarOpen, setSidebarOpen }: Navigat
                 <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
               </div>
               <div className="flex items-center space-x-2">
-                <Badge variant="outline" className="text-xs border-white/30 text-blue-100 bg-white/10">
+                <Badge variant="outline" className="text-xs border-white/30 text-orange-100 bg-white/10">
                   {currentUser?.title || currentUser?.role || "Devotee"}
                 </Badge>
-                <span className="text-xs text-blue-200">Online</span>
+                <span className="text-xs text-orange-200">Online</span>
               </div>
             </div>
           </div>
@@ -237,7 +237,7 @@ export function Navigation({ currentUser, sidebarOpen, setSidebarOpen }: Navigat
             {/* Main Navigation */}
             <div className="space-y-1">
               <div className="px-2 mb-3">
-                <h3 className="text-xs font-semibold text-blue-200 uppercase tracking-wider">Navigation</h3>
+                <h3 className="text-xs font-semibold text-orange-200 uppercase tracking-wider">Navigation</h3>
               </div>
 
               <Link href="/">
@@ -324,13 +324,13 @@ export function Navigation({ currentUser, sidebarOpen, setSidebarOpen }: Navigat
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="h-5 w-5 p-0 text-blue-200 hover:text-white hover:bg-white/10 transition-all duration-200"
+                    className="h-5 w-5 p-0 text-orange-200 hover:text-white hover:bg-white/10 transition-all duration-200"
                     onClick={() => setChannelsCollapsed(!channelsCollapsed)}
                   >
                     {channelsCollapsed ? <ChevronRight className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
                   </Button>
-                  <Hash className="h-4 w-4 text-blue-300" />
-                  <h3 className="text-xs font-semibold text-blue-200 uppercase tracking-wider">Channels</h3>
+                  <Hash className="h-4 w-4 text-orange-300" />
+                  <h3 className="text-xs font-semibold text-orange-200 uppercase tracking-wider">Channels</h3>
                   {totalUnreadChannels > 0 && (
                     <Badge variant="destructive" className="h-4 px-1.5 text-xs animate-pulse">
                       {totalUnreadChannels}
@@ -341,7 +341,7 @@ export function Navigation({ currentUser, sidebarOpen, setSidebarOpen }: Navigat
                   <Button
                     size="sm"
                     variant="ghost"
-                    className="h-5 w-5 p-0 text-blue-200 hover:text-white hover:bg-white/10 opacity-0 group-hover:opacity-100 transition-all duration-200"
+                    className="h-5 w-5 p-0 text-orange-200 hover:text-white hover:bg-white/10 opacity-0 group-hover:opacity-100 transition-all duration-200"
                   >
                     <Plus className="h-3 w-3" />
                   </Button>
@@ -383,7 +383,7 @@ export function Navigation({ currentUser, sidebarOpen, setSidebarOpen }: Navigat
                                 )}
                               </div>
                             </div>
-                            <div className="text-xs text-blue-200 opacity-75 truncate">
+                            <div className="text-xs text-orange-200 opacity-75 truncate">
                               {channel.memberCount} members
                               {channel.description && ` • ${channel.description.substring(0, 20)}...`}
                             </div>
@@ -405,13 +405,13 @@ export function Navigation({ currentUser, sidebarOpen, setSidebarOpen }: Navigat
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="h-5 w-5 p-0 text-blue-200 hover:text-white hover:bg-white/10 transition-all duration-200"
+                    className="h-5 w-5 p-0 text-orange-200 hover:text-white hover:bg-white/10 transition-all duration-200"
                     onClick={() => setDmsCollapsed(!dmsCollapsed)}
                   >
                     {dmsCollapsed ? <ChevronRight className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
                   </Button>
-                  <Users className="h-4 w-4 text-blue-300" />
-                  <h3 className="text-xs font-semibold text-blue-200 uppercase tracking-wider">Direct Messages</h3>
+                  <Users className="h-4 w-4 text-orange-300" />
+                  <h3 className="text-xs font-semibold text-orange-200 uppercase tracking-wider">Direct Messages</h3>
                   <div className="flex items-center space-x-1">
                     {totalUnreadDMs > 0 && (
                       <Badge variant="destructive" className="h-4 px-1.5 text-xs animate-pulse">
@@ -432,7 +432,7 @@ export function Navigation({ currentUser, sidebarOpen, setSidebarOpen }: Navigat
                   <Button
                     size="sm"
                     variant="ghost"
-                    className="h-5 w-5 p-0 text-blue-200 hover:text-white hover:bg-white/10 opacity-0 group-hover:opacity-100 transition-all duration-200"
+                    className="h-5 w-5 p-0 text-orange-200 hover:text-white hover:bg-white/10 opacity-0 group-hover:opacity-100 transition-all duration-200"
                   >
                     <Plus className="h-3 w-3" />
                   </Button>
@@ -451,7 +451,7 @@ export function Navigation({ currentUser, sidebarOpen, setSidebarOpen }: Navigat
                           <div className="relative flex-shrink-0">
                             <Avatar className="w-8 h-8 border border-white/20">
                               <AvatarImage src={dm.avatar || "/placeholder.svg"} />
-                              <AvatarFallback className="bg-gradient-to-br from-indigo-500 to-blue-600 text-white text-xs">
+                              <AvatarFallback className="bg-gradient-to-br from-orange-500 to-amber-600 text-white text-xs">
                                 {dm.name
                                   .split(" ")
                                   .map((n) => n[0])
@@ -459,7 +459,7 @@ export function Navigation({ currentUser, sidebarOpen, setSidebarOpen }: Navigat
                               </AvatarFallback>
                             </Avatar>
                             <div
-                              className={`absolute -bottom-1 -right-1 w-3 h-3 rounded-full border-2 border-blue-800 ${getStatusColor(dm.status)} ${
+                              className={`absolute -bottom-1 -right-1 w-3 h-3 rounded-full border-2 border-orange-800 ${getStatusColor(dm.status)} ${
                                 dm.status === "online" ? "animate-pulse" : ""
                               }`}
                             ></div>
@@ -500,10 +500,10 @@ export function Navigation({ currentUser, sidebarOpen, setSidebarOpen }: Navigat
                             </div>
 
                             <div className="flex items-center justify-between">
-                              <span className="text-xs text-blue-200 opacity-75 truncate flex-1">
+                              <span className="text-xs text-orange-200 opacity-75 truncate flex-1">
                                 {dm.isTyping ? "typing..." : dm.lastMessage}
                               </span>
-                              <span className="text-xs text-blue-300 opacity-60 flex-shrink-0 ml-2">
+                              <span className="text-xs text-orange-300 opacity-60 flex-shrink-0 ml-2">
                                 {dm.lastMessageTime}
                               </span>
                             </div>
@@ -519,7 +519,7 @@ export function Navigation({ currentUser, sidebarOpen, setSidebarOpen }: Navigat
         </ScrollArea>
 
         {/* Enhanced Settings Footer */}
-        <div className="p-4 border-t border-white/10 bg-gradient-to-r from-blue-800 to-indigo-800">
+        <div className="p-4 border-t border-white/10 bg-gradient-to-r from-amber-600 to-orange-600">
           <Link href="/settings">
             <Button
               variant="ghost"

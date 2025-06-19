@@ -175,9 +175,9 @@ export default function AdminPanel() {
       case "admin":
         return "bg-gradient-to-r from-red-500 to-pink-600"
       case "coordinator":
-        return "bg-gradient-to-r from-purple-500 to-indigo-600"
+        return "bg-gradient-to-r from-purple-500 to-orange-600"
       default:
-        return "bg-gradient-to-r from-blue-500 to-cyan-600"
+        return "bg-gradient-to-r from-amber-500 to-cyan-600"
     }
   }
 
@@ -196,7 +196,7 @@ export default function AdminPanel() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="bg-gradient-to-r from-indigo-600 to-blue-600 text-white p-4">
+      <div className="bg-gradient-to-r from-orange-600 to-amber-600 text-white p-4">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <Button variant="ghost" size="sm" onClick={() => router.push("/")} className="text-white hover:bg-white/20">
@@ -205,7 +205,7 @@ export default function AdminPanel() {
             </Button>
             <div>
               <h1 className="text-2xl font-bold">Developer Panel</h1>
-              <p className="text-blue-100">Manage users, channels, and permissions</p>
+              <p className="text-amber-100">Manage users, channels, and permissions</p>
             </div>
           </div>
           <Badge className="bg-white/20 text-white">
@@ -477,7 +477,7 @@ export default function AdminPanel() {
                       </ul>
                     </div>
                     <div className="p-4 border rounded-lg">
-                      <h3 className="font-medium text-blue-700 mb-2">👤 User</h3>
+                      <h3 className="font-medium text-amber-700 mb-2">👤 User</h3>
                       <ul className="text-sm space-y-1 text-gray-600">
                         <li>• Message same gender freely</li>
                         <li>• Request cross-gender messaging</li>
@@ -487,9 +487,9 @@ export default function AdminPanel() {
                     </div>
                   </div>
 
-                  <div className="p-4 bg-blue-50 rounded-lg">
-                    <h4 className="font-medium text-blue-900 mb-2">Gender-Based Restrictions</h4>
-                    <div className="text-sm text-blue-700 space-y-1">
+                  <div className="p-4 bg-amber-50 rounded-lg">
+                    <h4 className="font-medium text-amber-900 mb-2">Gender-Based Restrictions</h4>
+                    <div className="text-sm text-amber-700 space-y-1">
                       <p>
                         • <strong>Matajis</strong> can message other Matajis freely
                       </p>
