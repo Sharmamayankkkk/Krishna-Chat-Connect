@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -13,6 +12,7 @@ import { Eye, EyeOff } from "lucide-react"
 import { Logo } from "@/components/logo"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { supabase } from "@/lib/supabaseClient"
 
 export default function SignupPage() {
   const [formData, setFormData] = useState({
@@ -27,6 +27,7 @@ export default function SignupPage() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
+  const [success, setSuccess] = useState("")
   const router = useRouter()
 
   const handleInputChange = (field: string, value: string) => {
@@ -37,6 +38,7 @@ export default function SignupPage() {
     e.preventDefault()
     setIsLoading(true)
     setError("")
+    setSuccess("")
 
     if (formData.password !== formData.confirmPassword) {
       setError("Passwords do not match")
@@ -50,24 +52,45 @@ export default function SignupPage() {
       return
     }
 
-    // Simulate registration
-    setTimeout(() => {
-      const userData = {
-        id: Date.now().toString(),
-        email: formData.email,
-        name: formData.name,
-        spiritualName: formData.spiritualName,
-        role: "user",
-        gender: formData.gender,
-        title: formData.gender === "female" ? "Mataji" : "Prabhuji",
-        avatar: "/placeholder.svg?height=40&width=40",
-        isAuthenticated: true,
-        joinedAt: new Date().toISOString(),
+    console.log("Attempting signup with:", formData.email)
+
+    const { data, error } = await supabase.auth.signUp({
+      email: formData.email,
+      password: formData.password,
+    })
+
+    console.log("Signup response:", { data, error })
+
+    if (error) {
+      console.error("Signup error:", error)
+      setError(error.message)
+    } else if (data.user) {
+      console.log("Signup successful, creating profile...")
+      // Create profile in profiles table
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .insert({
+          id: data.user.id,
+          email: formData.email,
+          name: formData.name,
+          spiritual_name: formData.spiritualName || null,
+          gender: formData.gender as 'male' | 'female',
+          role: 'user',
+        })
+
+      if (profileError) {
+        console.error("Profile creation error:", profileError)
+        setError(profileError.message)
+      } else {
+        console.log("Profile created successfully")
+        setSuccess("Account created successfully! Please check your email for verification.")
+        setTimeout(() => {
+          router.push("/auth/login")
+        }, 2000)
       }
-      localStorage.setItem("user", JSON.stringify(userData))
-      router.push("/")
-      setIsLoading(false)
-    }, 1000)
+    }
+
+    setIsLoading(false)
   }
 
   return (
@@ -85,6 +108,12 @@ export default function SignupPage() {
             {error && (
               <Alert variant="destructive">
                 <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            )}
+
+            {success && (
+              <Alert>
+                <AlertDescription>{success}</AlertDescription>
               </Alert>
             )}
 

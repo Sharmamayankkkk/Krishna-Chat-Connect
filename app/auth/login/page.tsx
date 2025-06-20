@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -12,6 +11,7 @@ import { Eye, EyeOff } from "lucide-react"
 import { Logo } from "@/components/logo"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { supabase } from "@/lib/supabaseClient"
 
 export default function LoginPage() {
   const [email, setEmail] = useState("")
@@ -22,37 +22,46 @@ export default function LoginPage() {
   const router = useRouter()
 
   const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
-    setError("")
+  e.preventDefault();
+  setIsLoading(true);
+  setError("");
 
-    // Simulate authentication
-    setTimeout(() => {
-      if (email && password) {
-        // Store user data in localStorage for demo
-        const userData = {
-          id: "1",
-          email,
-          name: email.includes("gurudev") ? "His Divine Grace" : email.includes("admin") ? "Admin Prabhu" : "Devotee",
-          role: email.includes("gurudev")
-            ? "gurudev"
-            : email.includes("admin")
-              ? "admin"
-              : email.includes("coordinator")
-                ? "coordinator"
-                : "user",
-          gender: email.includes("mataji") || email.includes("devi") ? "female" : "male",
-          avatar: "/placeholder.svg?height=40&width=40",
-          isAuthenticated: true,
-        }
-        localStorage.setItem("user", JSON.stringify(userData))
-        router.push("/")
-      } else {
-        setError("Please enter valid credentials")
-      }
-      setIsLoading(false)
-    }, 1000)
+  const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
+
+  if (authError) {
+    setError(authError.message);
+    setIsLoading(false);
+    return;
   }
+
+  const userId = authData?.user?.id;
+
+  if (userId) {
+    // Fetch profile
+    const { data: profileData, error: profileError } = await supabase
+      .from("profiles")
+      .select("*")
+      .eq("id", userId)
+      .single();
+
+    if (profileError) {
+      console.error("Profile fetch error:", profileError);
+      setError("Login successful, but failed to load user profile.");
+    } else {
+      console.log("Login + Profile:", { user: authData.user, profile: profileData });
+
+      // You can store full user info locally or in state
+      localStorage.setItem("user", JSON.stringify( profileData ));
+
+      router.push("/");
+    }
+  }
+
+  setIsLoading(false);
+};
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-blue-800 to-blue-700 flex items-center justify-center p-4">
@@ -120,11 +129,6 @@ export default function LoginPage() {
               <Link href="/auth/signup" className="text-indigo-600 hover:text-indigo-500 font-medium">
                 Sign up
               </Link>
-            </div>
-
-            <div className="text-center text-xs text-gray-500 mt-4">
-              <p>Demo Accounts:</p>
-              <p>gurudev@temple.org | admin@temple.org | mataji@temple.org | prabhu@temple.org</p>
             </div>
           </form>
         </CardContent>
